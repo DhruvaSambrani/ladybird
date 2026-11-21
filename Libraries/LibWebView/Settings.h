@@ -171,6 +171,8 @@ enum class ConfigVariableID : u8 {
 #if defined(LADYBIRD_HAS_UPDATE_CHECK)
     UpdateCheckInterval,
 #endif
+    VimKeybindingsEnabled,
+    VimKeybindings,
 
     Count,
 };

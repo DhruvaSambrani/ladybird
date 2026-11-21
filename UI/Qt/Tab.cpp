@@ -40,6 +40,7 @@
 #include <UI/Qt/SuggestionProvider.h>
 #include <UI/Qt/SystemAppearance.h>
 #include <UI/Qt/Theme.h>
+#include <UI/Qt/VimKeybindings.h>
 
 #include <QAction>
 #include <QApplication>
@@ -1435,6 +1436,8 @@ bool Tab::event(QEvent* event)
 
 bool Tab::eventFilter(QObject* watched, QEvent* event)
 {
+    if (watched == m_view && event->type() == QEvent::KeyPress && VimKeybindings::handle_key_press(*m_window, *this, *static_cast<QKeyEvent*>(event)))
+        return true;
     // NB: The hover text lets the pointer through, so it moves aside when the pointer comes near it.
     if (watched == m_view && event->type() == QEvent::MouseMove && !m_hover_text.isEmpty()
         && hover_text_belongs_on_right(static_cast<QMouseEvent*>(event)->position().toPoint()) != m_hover_text_is_on_right)

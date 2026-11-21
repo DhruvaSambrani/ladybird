@@ -165,6 +165,7 @@ private:
     QWidget* m_window_controls_separator { nullptr };
     QWidget* m_sidebar_slot { nullptr };
     QWidget* m_trailing_sidebar_slot { nullptr };
+    QWidget* m_vim_indicator { nullptr };
     QWidget* m_window_controls { nullptr };
     QToolButton* m_minimize_window_button { nullptr };
     QToolButton* m_maximize_window_button { nullptr };

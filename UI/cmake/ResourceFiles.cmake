@@ -21,6 +21,7 @@ list(TRANSFORM 48x48_ICONS PREPEND "${LADYBIRD_SOURCE_DIR}/Base/res/icons/48x48/
 set(INTERNAL_RESOURCES
     ladybird.css
     utils.js
+    vim-hints.js
     WebCompat.json
 )
 list(TRANSFORM INTERNAL_RESOURCES PREPEND "${LADYBIRD_SOURCE_DIR}/Base/res/ladybird/")

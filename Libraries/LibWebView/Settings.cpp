@@ -230,6 +230,22 @@ static auto const& CONFIG_VARIABLE_DEFINITIONS = *new Array<ConfigVariableDefini
         .array_element_type = {},
     },
 #endif
+    {
+        .id = ConfigVariableID::VimKeybindingsEnabled,
+        .name = "ui.vim.enabled"sv,
+        .title = "Vim keybindings"sv,
+        .description = "Use vim-style keys on pages, except in text fields: h j k l scroll, H L go back and forward, J K switch tabs, g0 g$ go to the first and last tab, b lists the tabs, / ? n N search, o O t T open, f F follow links by their hints, yy copies the URL and yf a link by its hint, p P open the copied text, r R reload, the latter bypassing the cache, q closes the tab and Escape leaves a text field. Shift+Escape turns them on and off."sv,
+        .default_value = true,
+        .array_element_type = {},
+    },
+    {
+        .id = ConfigVariableID::VimKeybindings,
+        .name = "ui.vim.keybindings"sv,
+        .title = "Vim keybinding changes"sv,
+        .description = "One per line, a key or a sequence of keys and then a command, or none to unbind it, such as \"x close-tab\" or \"gt next-tab\". The commands are scroll-left, scroll-down, scroll-up, scroll-right, back, forward, previous-tab, next-tab, first-tab, last-tab, tab-list, find, find-backward, find-next, find-previous, open, open-current, tab-open, tab-open-current, reload, reload-bypassing-cache, close-tab, hint, hint-new-tab, hint-yank, yank-url, paste-open and paste-tab-open."sv,
+        .default_value = JsonArray {},
+        .array_element_type = JsonValue::Type::String,
+    },
 } };
 
 ReadonlySpan<ConfigVariableDefinition> config_variable_definitions()

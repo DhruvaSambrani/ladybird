@@ -1230,6 +1230,9 @@ WindowToolbar::WindowToolbar(WebView::IsPrivate is_private, QWidget* parent)
         show_downloads_popover();
     });
 
+    m_vim_indicator = new QLabel("VIM", m_toolbar);
+    m_vim_indicator->setVisible(Application::settings().config_variable_as_bool(WebView::ConfigVariableID::VimKeybindingsEnabled));
+
     if constexpr (has_feedback_button) {
         m_feedback_button = new FeedbackButton(m_toolbar);
         QObject::connect(m_feedback_button, &QToolButton::clicked, this, [this] {
@@ -1436,6 +1439,7 @@ void WindowToolbar::lay_out_as_row()
     toolbar_layout->addWidget(m_navigation_buttons, 0, Qt::AlignVCenter);
     m_navigation_buttons->show();
     toolbar_layout->addWidget(&field_slot(), 1);
+    toolbar_layout->addWidget(m_vim_indicator, 0, Qt::AlignVCenter);
     toolbar_layout->addWidget(m_downloads_button, 0, Qt::AlignVCenter);
     if (m_feedback_button)
         toolbar_layout->addWidget(m_feedback_button, 0, Qt::AlignVCenter);
@@ -1474,6 +1478,7 @@ void WindowToolbar::lay_out_in_sidebar()
     m_window_controls_separator->hide();
 
     auto* footer_layout = static_cast<QBoxLayout*>(m_sidebar_footer->layout());
+    footer_layout->addWidget(m_vim_indicator, 0, Qt::AlignVCenter);
     footer_layout->addWidget(m_downloads_button, 0, Qt::AlignVCenter);
     if (m_feedback_button)
         footer_layout->addWidget(m_feedback_button, 0, Qt::AlignVCenter);
@@ -1991,6 +1996,8 @@ void WindowToolbar::config_variable_changed(WebView::ConfigVariableID variable)
     }
     if (variable == WebView::ConfigVariableID::ShowTabPerformanceMonitor)
         update_performance_monitor_row();
+    if (variable == WebView::ConfigVariableID::VimKeybindingsEnabled)
+        m_vim_indicator->setVisible(Application::settings().config_variable_as_bool(variable));
 }
 
 void WindowToolbar::update_performance_monitor_row()

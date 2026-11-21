@@ -72,6 +72,7 @@ add_library(ladybird_impl STATIC
     TabBar.cpp
     Theme.cpp
     VersionPage.cpp
+    VimKeybindings.cpp
     WebCompatReportReview.cpp
     WebContentView.cpp
     WebUIPage.cpp

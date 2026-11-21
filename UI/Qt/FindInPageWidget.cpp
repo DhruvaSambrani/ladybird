@@ -17,6 +17,7 @@
 #    include <UI/Qt/MacWindow.h>
 #endif
 #include <UI/Qt/Theme.h>
+#include <UI/Qt/VimKeybindings.h>
 #include <UI/Qt/WebContentView.h>
 
 #include <QEvent>
@@ -228,7 +229,9 @@ void FindInPageWidget::keyPressEvent(QKeyEvent* event)
         close_bar();
         break;
     case Qt::Key_Return:
-        if (event->modifiers().testFlag(Qt::ShiftModifier))
+        if (VimKeybindings::is_enabled())
+            m_content_view->setFocus();
+        else if (event->modifiers().testFlag(Qt::ShiftModifier))
             m_previous_button->click();
         else
             m_next_button->click();
