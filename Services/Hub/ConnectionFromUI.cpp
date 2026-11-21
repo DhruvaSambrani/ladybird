@@ -1171,6 +1171,12 @@ void ConnectionFromUI::view_select_all(u64 view_id)
         view->select_all();
 }
 
+void ConnectionFromUI::view_run_javascript(u64 view_id, String source)
+{
+    if (auto* view = find_view(view_id))
+        view->run_javascript(source);
+}
+
 void ConnectionFromUI::view_get_source(u64 view_id)
 {
     if (auto* view = find_view(view_id))

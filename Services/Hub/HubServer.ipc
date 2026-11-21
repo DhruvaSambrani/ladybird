@@ -281,6 +281,7 @@ endpoint HubServer
     view_cut_selection(u64 view_id) =|
     view_paste(u64 view_id, Web::Clipboard::PasteMode paste_mode) =|
     view_select_all(u64 view_id) =|
+    view_run_javascript(u64 view_id, String source) =|
     view_get_source(u64 view_id) =|
     view_debug_request(u64 view_id, ByteString request, ByteString argument) =|
     view_dump_gc_graph(u64 view_id) =|

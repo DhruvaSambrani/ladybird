@@ -196,6 +196,7 @@ private:
     virtual void view_cut_selection(u64 view_id) override;
     virtual void view_paste(u64 view_id, Web::Clipboard::PasteMode) override;
     virtual void view_select_all(u64 view_id) override;
+    virtual void view_run_javascript(u64 view_id, String source) override;
     virtual void view_get_source(u64 view_id) override;
     virtual void view_traverse_the_history_by_delta(u64 view_id, i32 delta) override;
     virtual void view_translate_to(u64 view_id, String target_language) override;
