@@ -1241,6 +1241,15 @@ void PageClient::page_did_change_accessibility_focus(Web::UniqueNodeID node_id)
         m_accessibility_focus_timer->start();
 }
 
+void PageClient::page_did_change_focused_area()
+{
+    // A script moving the focus sends no input event, so tell the UI whether a text field has it now.
+    Web::Platform::EventLoopPlugin::the().deferred_invoke(GC::create_function(GC::Heap::the(), GC::captures(GC::Ref { *this }), [](auto& page_client) {
+        if (!page_client->m_is_closed)
+            page_client->client().update_input_method_state(page_client->m_id);
+    }));
+}
+
 void PageClient::page_did_change_accessibility_tree()
 {
     schedule_accessibility_tree_update();

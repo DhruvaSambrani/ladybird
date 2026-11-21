@@ -297,6 +297,7 @@ private:
     virtual void page_did_unregister_download(u64 download_id) override;
     virtual bool page_is_download_canceled(u64 download_id) const override;
     virtual void page_did_change_accessibility_focus(Web::UniqueNodeID) override;
+    virtual void page_did_change_focused_area() override;
 
     virtual void page_did_request_alert(Utf16String const&) override;
     virtual void page_did_request_before_unload(String const&) override;
