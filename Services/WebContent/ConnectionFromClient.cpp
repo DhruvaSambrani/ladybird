@@ -3405,6 +3405,13 @@ void ConnectionFromClient::update_input_method_state(Web::PageId page_id)
             caret_rect = page->page().enclosing_device_rect(*rect);
 
         if (auto const* text_control = as_if<Web::HTML::FormAssociatedTextControlElement>(document->focused_area().ptr())) {
+            // NB: Email and number inputs take text too, though the selection API doesn't apply to them.
+            auto const& html_element = text_control->text_control_to_html_element();
+            if (auto const* input_element = as_if<Web::HTML::HTMLInputElement>(html_element))
+                is_enabled = input_element->has_selectable_text() && input_element->is_mutable();
+            else if (auto const* text_area_element = as_if<Web::HTML::HTMLTextAreaElement>(html_element))
+                is_enabled = text_area_element->is_mutable();
+
             if (text_control->selection_start_binding().has_value()) {
                 auto value = text_control->relevant_value();
                 auto selection_start = text_control->selection_start();
@@ -3414,12 +3421,6 @@ void ConnectionFromClient::update_input_method_state(Web::PageId page_id)
                 auto value_length = value.length_in_code_units();
                 auto text_before_start = cursor > maximum_input_method_surrounding_text_length ? cursor - maximum_input_method_surrounding_text_length : 0;
                 auto text_after_length = min(value_length - cursor, maximum_input_method_surrounding_text_length);
-
-                auto const& html_element = text_control->text_control_to_html_element();
-                if (auto const* input_element = as_if<Web::HTML::HTMLInputElement>(html_element))
-                    is_enabled = input_element->is_mutable();
-                else if (auto const* text_area_element = as_if<Web::HTML::HTMLTextAreaElement>(html_element))
-                    is_enabled = text_area_element->is_mutable();
 
                 cursor_position = AK::clamp_to<i32>(cursor);
                 anchor_position = AK::clamp_to<i32>(anchor);
